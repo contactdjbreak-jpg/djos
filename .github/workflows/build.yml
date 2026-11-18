@@ -1,0 +1,18 @@
+name: Build DJOS ISO
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Liberer de la place
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+      - name: Construire l'ISO
+        run: sudo bash build-djos.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DJOS-iso
+          path: /opt/djos-build/*.iso
+          compression-level: 0
